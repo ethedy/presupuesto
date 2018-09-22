@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Analisis.cs" />
     <Compile Include="ObraSocial.cs" />
+    <Compile Include="Paciente.cs" />
     <Compile Include="Precio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

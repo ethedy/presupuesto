@@ -21,7 +21,7 @@ namespace Datos
     public static PresupuestoContext DB => _ctxPresupuesto ?? (_ctxPresupuesto =
                                           new PresupuestoContext());   //Contexto.Current.GetProperContextName("Dotacion"))
 
-    private PresupuestoContext() //: base("PresupuestoContextRemoto")
+    private PresupuestoContext() : base("PresupuestoContextRemoto")
     {
       //  Ajustamos el log para que escriba en disco...
 
@@ -43,9 +43,11 @@ namespace Datos
 
     public DbSet<ObraSocial> ObrasSociales { get; set; }
 
-    public DbSet<Precio> Precios { get; set; }
+    //public DbSet<Precio> Precios { get; set; }
 
-    public DbSet<Analisis> Analisis { get; set; }
+    //public DbSet<Analisis> Analisis { get; set; }
+
+    //public DbSet<Paciente> Pacientes { get; set; }
 
     /// <summary>
     /// Permite definir si estamos en el servidor local (SEGURO) o remoto (ESCRITURA CONTROLADA)
@@ -77,13 +79,15 @@ namespace Datos
       public string Variable_Name { get; set; }
       public string Value { get; set; }
     }
-  }
 
-  public class ConfigurarObrasSociales : EntityTypeConfiguration<ObraSocial>
-  {
-    public ConfigurarObrasSociales()
+
+    private class ConfigurarObrasSociales : EntityTypeConfiguration<ObraSocial>
     {
-      this.ToTable("obrasocial");
+      public ConfigurarObrasSociales()
+      {
+        this.ToTable("obrasocial");
+      }
     }
   }
+
 }

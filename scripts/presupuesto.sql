@@ -48,5 +48,15 @@ show variables where variable_name like '%server%';
 
 show variables where variable_name like '%name%';
 
+select 
+  AN.nombre as Analisis, 
+  PR.precio, 
+  OS.nombre as ObraSocial
+from analisis as AN 
+  inner join precio as PR on AN.id = PR.idanalisis
+  inner join obrasocial as OS on PR.idObraSocial=OS.id
+where 
+  OS.id = 1
+  and AN.Activo and OS.Activo;
     
   

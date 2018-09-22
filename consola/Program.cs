@@ -46,6 +46,14 @@ namespace consola
           //  os1.Activo = false;
 
       var os = ctx.ObrasSociales.First();
+      //var os1 = ctx.ObrasSociales.Select();
+/*
+      var ing = ctx.Pacientes.Where(p => p.DNI == 18339577).Single().Ingresos.Count;
+
+      Listado resultado = new Listado { DNI = 18339577, Ingresos = ing};
+
+      var pp = ctx.Database.SqlQuery<Listado>("select DNI, count(*) as Ingresos from ....where DNI=@p0 group by DNI", 18339577).ToList();
+*/
       if (!ctx.ModoSeguro)
       {
         os.Activo = !os.Activo;
@@ -69,6 +77,13 @@ namespace consola
       public string Analisis { get; set; }
 
       public decimal Precio { get; set; }
+    }
+
+    private class Listado
+    {
+      public int DNI { get; set; }
+
+      public int Ingresos { get; set; }
     }
 
   }
