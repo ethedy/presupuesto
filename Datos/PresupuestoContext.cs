@@ -18,10 +18,10 @@ namespace Datos
 
     private static PresupuestoContext _ctxPresupuesto;
 
-    public static PresupuestoContext DB => _ctxPresupuesto ?? (_ctxPresupuesto =
-                                          new PresupuestoContext());   //Contexto.Current.GetProperContextName("Dotacion"))
+    public static PresupuestoContext DB => _ctxPresupuesto ?? (_ctxPresupuesto = new PresupuestoContext());   
+    //Contexto.Current.GetProperContextName("Presupuesto"))
 
-    private PresupuestoContext() : base("PresupuestoContextRemoto")
+    private PresupuestoContext() // : base("PresupuestoContextRemoto")
     {
       //  Ajustamos el log para que escriba en disco...
 
