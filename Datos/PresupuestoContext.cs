@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entidades;
+using Infraestructura;
 
 namespace Datos
 {
@@ -14,11 +15,18 @@ namespace Datos
   {
     private readonly List<Variable> _variablesServer;
 
-    private readonly StreamWriter _writer;
+    //  private readonly StreamWriter _writer;
 
     private static PresupuestoContext _ctxPresupuesto;
 
-    public static PresupuestoContext DB => _ctxPresupuesto ?? (_ctxPresupuesto = new PresupuestoContext());   
+    //  public static PresupuestoContext DB => _ctxPresupuesto ?? (_ctxPresupuesto = new PresupuestoContext());
+    public static PresupuestoContext DB
+    {
+      get
+      {
+        return _ctxPresupuesto ?? (_ctxPresupuesto = new PresupuestoContext());
+      }
+    }
     //Contexto.Current.GetProperContextName("Presupuesto"))
 
     private PresupuestoContext() // : base("PresupuestoContextRemoto")
@@ -28,9 +36,12 @@ namespace Datos
       //  writer = File.CreateText($@"{Environment.CurrentDirectory}\{this.GetType().Name}.LOG");
       //  writer = File.CreateText($@"C:\Users\Enrique\Documents\DESARROLLO\{this.GetType().Name}.LOG");
       //  writer = File.CreateText(string.Format(@"{0}\{1}.LOG", "F:\\", this.GetType().Name));
-      _writer = File.CreateText($@"{Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}\{this.GetType().Name}.LOG");
 
-      Database.Log = _writer.WriteLine;
+
+      //  _writer = File.CreateText($@"{Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}\{this.GetType().Name}.LOG");
+
+      //  Database.Log = _writer.WriteLine;
+      Database.Log = Logger.Log.LogExterno;
 
       //  Lamentablemente no funciona con tuplas aunque seria maravilloso...
       //
@@ -62,6 +73,15 @@ namespace Datos
       }
     }
 
+    public void Log(string info)
+    {
+      //_writer.WriteLine("LOG PROPIO");
+      //_writer.WriteLine(info);
+
+      Logger.Log.Info("LOG PROPIO");
+      Logger.Log.Info(info);
+    }
+
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
       modelBuilder.Configurations.Add(new ConfigurarObrasSociales());
@@ -71,7 +91,7 @@ namespace Datos
     protected override void Dispose(bool disposing)
     {
       base.Dispose(disposing);
-      _writer.Close();
+      //_writer.Close();
     }
 
     private class Variable

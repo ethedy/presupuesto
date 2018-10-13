@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Datos;
 using Entidades;
 using MySql.Data.EntityFramework;
+using Infraestructura;
 
 namespace consola
 {
@@ -17,8 +18,11 @@ namespace consola
       AppDomain.CurrentDomain.UnhandledException += (o, e) =>
       {
         PresupuestoContext.DB.Dispose();
+        Logger.Log.Close();
         Console.WriteLine("Excepcion");
       };
+
+      Logger.Log.Info("Inicializando...");
 
       using (PresupuestoContext ctx = PresupuestoContext.DB) 
       {
@@ -62,6 +66,7 @@ namespace consola
 
         Console.ReadLine();
       }
+      Logger.Log.Close();
     }
 
     private class PrecioCuidado
