@@ -54,9 +54,9 @@ namespace Datos
 
     public DbSet<ObraSocial> ObrasSociales { get; set; }
 
-    //public DbSet<Precio> Precios { get; set; }
+    public DbSet<Precio> Precios { get; set; }
 
-    //public DbSet<Analisis> Analisis { get; set; }
+    public DbSet<Analisis> Analisis { get; set; }
 
     //public DbSet<Paciente> Pacientes { get; set; }
 
@@ -85,6 +85,9 @@ namespace Datos
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
       modelBuilder.Configurations.Add(new ConfigurarObrasSociales());
+      modelBuilder.Configurations.Add(new ConfigurarPrecios());
+      modelBuilder.Configurations.Add(new ConfigurarAnalisis());
+
       //  base.OnModelCreating(modelBuilder);
     }
 
@@ -108,6 +111,32 @@ namespace Datos
         this.ToTable("obrasocial");
       }
     }
-  }
 
+    private class ConfigurarAnalisis : EntityTypeConfiguration<Analisis>
+    {
+      public ConfigurarAnalisis()
+      {
+        this.ToTable("analisis");
+        this.Property(an => an.Codigo)
+          .HasColumnName("CodAna");
+      }
+    }
+
+    private class ConfigurarPrecios : EntityTypeConfiguration<Precio>
+    {
+      public ConfigurarPrecios()
+      {
+        this.ToTable("precio");
+        this.Property(p => p.Valor).HasColumnName("Precio");
+
+        this.HasRequired(p => p.ObraSocial)
+          .WithMany(os => os.Precios)
+          .Map(cfg => cfg.MapKey("IdObraSocial"));
+
+        this.HasRequired(p => p.Analisis)
+          .WithMany()
+          .Map(cfg => cfg.MapKey("IdAnalisis"));
+      }
+    }
+  }
 }

@@ -13,5 +13,10 @@ namespace Entidades
     public string Nombre { get; set; }
 
     public bool Activo { get; set; }
+
+    //  si Precio no tuviera propiedades podriamos hacer esto:
+    //  public virtual HashSet<Analisis> Analisis { get; set; }
+
+    public virtual ISet<Precio> Precios { get; set; }
   }
 }

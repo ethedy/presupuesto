@@ -44,7 +44,23 @@ namespace consola
         foreach (var x in lista)
           Console.WriteLine($"{x.Analisis} -- {x.Precio}");
 
-        var os = ctx.ObrasSociales.First();
+        //  LINQ
+        var os = ctx.ObrasSociales.Where(pepe => pepe.ID == 1).FirstOrDefault();
+
+        var xx = os.Precios.Average(p => p.Valor);
+
+        Console.WriteLine(xx);
+        
+        foreach (var x in os.Precios)
+        {
+          Console.WriteLine($"Analisis: {x.Analisis.Nombre} -- Precio: {x.Valor}");
+        }
+
+        var analisis = ctx.Analisis.Join(ctx.Precios, xxx => xxx.ID, pp => pp.Analisis.ID, 
+          (a, p) => new { a.Nombre, p.ObraSocial }).Where(hh => hh.ObraSocial.ID != 1).First();
+
+
+        
         //var os1 = ctx.ObrasSociales.Select();
         /*
               var ing = ctx.Pacientes.Where(p => p.DNI == 18339577).Single().Ingresos.Count;
@@ -53,6 +69,8 @@ namespace consola
 
               var pp = ctx.Database.SqlQuery<Listado>("select DNI, count(*) as Ingresos from ....where DNI=@p0 group by DNI", 18339577).ToList();
         */
+
+        /*
         if (!ctx.ModoSeguro)
         {
           bool fValorPrevio = os.Activo;
@@ -61,6 +79,8 @@ namespace consola
 
           Console.WriteLine($"==>  Cambios realizados...{os.Nombre} paso de {fValorPrevio} a {os.Activo}");
         }
+        */
+
 
         Console.WriteLine(os.Nombre);
 

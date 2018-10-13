@@ -56,7 +56,7 @@ from analisis as AN
   inner join precio as PR on AN.id = PR.idanalisis
   inner join obrasocial as OS on PR.idObraSocial=OS.id
 where 
-  OS.id = 1
+  OS.id = 2
   and AN.Activo and OS.Activo;
     
   
